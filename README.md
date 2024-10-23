@@ -465,15 +465,15 @@ service isc-dhcp-server restart
 ```
 ## Testing No 2
 
-![alt text](Soal1-5/Foto/Marley(2).png)
+![Marley(2)](https://github.com/user-attachments/assets/502708e5-ac7d-41ef-b6da-cd30758edf4e)
 
 ## Testing No 3
 
-![alt text](Soal1-5/Foto/Eldia(3).png)
+![Eldia(3)](https://github.com/user-attachments/assets/e4419b7d-ea4f-468b-be13-e56881132ac9)
 
 ## Testing No 4
 
-![alt text](Soal1-5/Foto/ping_erdia(4).png)
+![ping_erdia(4)](https://github.com/user-attachments/assets/e7c58747-9d84-46a8-8812-d53acbd174e7)
 
-![alt text](Soal1-5/Foto/ping_marley(4).png)
+![ping_marley(4)](https://github.com/user-attachments/assets/a8d10d7f-2ef3-40fb-96da-f4404273cf7d)
 
