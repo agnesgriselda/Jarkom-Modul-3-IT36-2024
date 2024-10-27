@@ -209,7 +209,7 @@ $TTL    604800
 service bind9 restart
 ```
 
-## Soal 1
+## Soal 1-5
 
 Lakukan konfigurasi sesuai dengan peta yang sudah diberikan. Semua Client harus menggunakan konfigurasi ip address dari keluarga Tybur (dhcp)
 
