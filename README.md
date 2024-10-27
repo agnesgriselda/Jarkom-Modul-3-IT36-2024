@@ -11,15 +11,6 @@
 | Agnes Zenobia Griselda Petrina | 5027231034    |
 
 
-## Daftar Isi
-
-1. [Topologi](#topologi)
-2. [Setup](#setup)
-3. [Soal 1](#soal-1)
-4. [Soal 2](#soal-2)
-5. [Soal 3](#soal-3)
-6. [Soal 4](#soal-4)
-7. [Soal 5](#soal-5)
 
 ## Topologi
 ![Screenshot 2024-10-21 191835](https://github.com/user-attachments/assets/d9fa3c0b-4406-490e-93a2-b6a9ed513ba3)
@@ -161,8 +152,6 @@ iface eth0 inet dhcp
 
 ## Soal 0
 
-Pulau Paradis telah menjadi tempat yang damai selama 1000 tahun, namun kedamaian tersebut tidak bertahan selamanya. Perang antara kaum Marley dan Eldia telah mencapai puncak. Kaum Marley yang dipimpin oleh Zeke, me-register domain name marley.yyy.com untuk worker Laravel mengarah pada Annie. Namun ternyata tidak hanya kaum Marley saja yang berinisiasi, kaum Eldia ternyata sudah mendaftarkan domain name eldia.yyy.com untuk worker PHP (0) mengarah pada Armin.
-
 ### [Fritz]
 ```sh
 echo 'zone "marley.it36.com" { 
@@ -210,8 +199,6 @@ service bind9 restart
 ```
 
 ## Soal 1-5
-
-Lakukan konfigurasi sesuai dengan peta yang sudah diberikan. Semua Client harus menggunakan konfigurasi ip address dari keluarga Tybur (dhcp)
 
 **Note:** Karena kebanyakan kode diletakan di file yang sama, maka soal digabung agar lebih efisien
 
@@ -288,3 +275,306 @@ service isc-dhcp-server restart
 
 ![ping_marley(4)](https://github.com/user-attachments/assets/a8d10d7f-2ef3-40fb-96da-f4404273cf7d)
 
+## Soal 6
+
+### Armin, Eren, Mikasa
+```
+mkdir -p /var/www/eldia.it36.com
+
+wget --no-check-certificate 'https://drive.google.com/uc?export=download&id=1TvebIeMQjRjFURKVtA32lO9aL7U2msd6' -O /root/bangsaEldia.zip
+unzip /root/bangsaEldia.zip -d /var/www/eldia.it36.com
+rm -rf /root/bangsaEldia.zip
+
+echo '
+server {
+
+        listen 80;
+
+        root /var/www/eldia.it36.com;
+
+        index index.php index.html index.htm;
+        server_name _;
+
+        location / {
+                        try_files $uri $uri/ /index.php?$query_string;
+        }
+
+        # pass PHP scripts to FastCGI server
+        location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php7.3-fpm.sock;
+        }
+
+location ~ /\.ht {
+                        deny all;
+        }
+
+        error_log /var/log/nginx/jarkom_error.log;
+        access_log /var/log/nginx/jarkom_access.log;
+ }' > /etc/nginx/sites-available/eldia.it36.com
+
+ln -s /etc/nginx/sites-available/eldia.it36.com /etc/nginx/sites-enabled
+rm -rf /etc/nginx/sites-enabled/default
+
+service php7.3-fpm start
+service php7.3-fpm restart
+service nginx restart
+nginx -t
+
+#use lynx eldia.it36.com
+```
+### Testing
+
+![lynx](https://github.com/user-attachments/assets/d1b9ea09-0913-4743-8c53-d59614485e10)
+
+## Soal 7
+
+### Colosal
+```
+echo '
+ upstream myweb  {
+        server 10.81.2.2; #IP Armin
+        server 10.81.2.3; #IP Eren
+        server 10.81.2.4; #IP Mikasa
+ }
+
+ server {
+        listen 80;
+        server_name eldia.it36.com;
+
+        location / {
+        proxy_pass http://myweb;
+        }
+ }' > /etc/nginx/sites-available/lb-php
+
+ln -s /etc/nginx/sites-available/lb-php /etc/nginx/sites-enabled
+rm -rf /etc/nginx/sites-enabled/default
+
+service nginx restart
+nginx -t
+```
+
+### Fritz
+```
+echo ';
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     eldia.it36.com. root.eldia.it36.com. (
+                              2         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      eldia.it36.com.
+@       IN      A       10.81.3.3     ; IP Colossal' > /etc/bind/eldia/eldia.it36.com
+
+service bind9 restart
+```
+
+
+## Testing
+![ROUNDROBIN](https://github.com/user-attachments/assets/9d91f7a8-90ba-4d88-82d7-3cce6bcefe7d)
+
+## Soal 8
+
+## Colosal
+```
+echo '
+ upstream myweb  {
+#    hash $request_uri consistent;
+#    least_conn;
+    ip_hash;
+        server 10.81.2.2; #IP Armin
+        server 10.81.2.3; #IP Eren
+        server 10.81.2.4; #IP Mikasa
+ }
+
+ server {
+        listen 80;
+        server_name eldia.it36.com;
+
+        location / {
+        proxy_pass http://myweb;
+        }
+ }' > /etc/nginx/sites-available/lb-php
+
+ln -s /etc/nginx/sites-available/lb-php /etc/nginx/sites-enabled
+rm -rf /etc/nginx/sites-enabled/default
+
+service nginx restart
+nginx -t
+
+#use ab -n 'sesuai soal' -c 'sesuai soal' http://eldia.it36.com/ to test the load balancing
+```
+### Testing
+
+![HASH](https://github.com/user-attachments/assets/6ce38859-db3e-4aa8-95ef-40e40cb614f9)
+
+![IPHASH](https://github.com/user-attachments/assets/87509a0d-6402-4144-8056-df94d7eddc7f)
+
+![LEAST](https://github.com/user-attachments/assets/77b0faa0-513e-4730-93ec-1a2a5c82929a)
+
+![ROUNDROBIN](https://github.com/user-attachments/assets/f55c6036-a097-4d6f-933c-9a3190df23c3)
+
+## Soal 9
+
+## Testing
+
+![1Worker](https://github.com/user-attachments/assets/f55bb82d-2745-4655-a59c-28df14e8ac34)
+
+![2Worker](https://github.com/user-attachments/assets/8e1e228e-a1f0-4441-9053-150e6df16b63)
+
+![3Worker](https://github.com/user-attachments/assets/c3b1fcc0-af1b-4eba-89fe-95e6dfa238f4)
+
+## Soal 10
+
+### Colosal
+```
+mkdir /etc/nginx/supersecret
+htpasswd -b -c /etc/nginx/supersecret/htpasswd arminannie jrkmit36
+
+echo '
+ upstream myweb  {
+        least_conn;
+        server 10.81.2.2; #IP Armin
+        server 10.81.2.3; #IP Eren
+        server 10.81.2.4; #IP Mikasa
+ }
+
+ server {
+        listen 80;
+        server_name eldia.it36.com;
+
+        location / {
+        auth_basic "Restricted Access";
+        auth_basic_user_file /etc/nginx/supersecret/htpasswd;
+        proxy_pass http://myweb;
+        }
+ }' > /etc/nginx/sites-available/lb-php
+
+ln -s /etc/nginx/sites-available/lb-php /etc/nginx/sites-enabled
+rm -rf /etc/nginx/sites-enabled/default
+
+service nginx restart
+nginx -t
+
+#test with lynx http://eldia.it36.com/
+```
+
+## Testing
+
+![FAIL](https://github.com/user-attachments/assets/8528ec1d-6f9c-4fe7-8be5-7db68e8825f2)
+
+![PASS](https://github.com/user-attachments/assets/0ec7e040-ebb6-4be1-9cb7-976dca945b37)
+
+![USERNAME](https://github.com/user-attachments/assets/a99103ba-6727-438c-9e67-281b88bce2e1)
+
+![CORRECT](https://github.com/user-attachments/assets/787885e5-f941-4dd0-8b69-02ad202e8d64)
+
+## Soal 11
+
+### Colosal
+```
+echo '
+ upstream myweb  {
+        least_conn;
+        server 10.81.2.2; #IP Armin
+        server 10.81.2.3; #IP Eren
+        server 10.81.2.4; #IP Mikasa
+ }
+
+ server {
+        listen 80;
+        server_name eldia.it36.com;
+
+        location / {
+        auth_basic "Restricted Access";
+        auth_basic_user_file /etc/nginx/supersecret/htpasswd;
+        proxy_pass http://myweb;
+        }
+
+        location /titan/ {
+        proxy_pass https://attackontitan.fandom.com/wiki/Attack_on_Titan_Wiki;
+        }
+ }' > /etc/nginx/sites-available/lb-php
+
+ln -s /etc/nginx/sites-available/lb-php /etc/nginx/sites-enabled
+rm -rf /etc/nginx/sites-enabled/default
+
+service nginx restart
+nginx -t
+
+#use lynx http://eldia.it36.com/titan/ to test the reverse proxy
+```
+
+## Testing
+
+![AOTWEB](https://github.com/user-attachments/assets/75ce2682-df47-4be6-b5d6-c2ec8349e546)
+
+## Soal 12
+
+### Colosal
+```
+echo '
+ upstream myweb  {
+        least_conn;
+        server 10.81.2.2; #IP Armin
+        server 10.81.2.3; #IP Eren
+        server 10.81.2.4; #IP Mikasa
+ }
+
+server {
+	listen 80;
+	server_name eldia.it36.com;
+
+	location / {
+		allow 10.81.1.77;
+		allow 10.81.1.88;
+		allow 10.81.2.144;
+		allow 10.81.2.156;
+		deny all;
+
+		auth_basic "Restricted Content";
+		auth_basic_user_file /etc/nginx/supersecret/htpasswd;
+		proxy_pass http://myweb;
+	}
+
+	location /dune {
+		proxy_pass https://attackontitan.fandom.com/wiki/Attack_on_Titan_Wiki;
+	}
+
+    location /extrahehe {
+		proxy_pass https://zenless-zone-zero.fandom.com/wiki/Von_Lycaon;
+	}
+}' > /etc/nginx/sites-available/lb-php
+
+ln -s /etc/nginx/sites-available/lb-php /etc/nginx/sites-enabled
+rm -rf /etc/nginx/sites-enabled/default
+
+service nginx restart
+nginx -t
+```
+
+### Tybur
+```
+echo 'host Zeke{
+        hardware ethernet fa:61:fb:1a:8d:5b;
+        fixed-address 10.81.1.77;
+}
+' >> /etc/dhcp/dhcpd.conf
+
+service isc-dhcp-server restart
+```
+
+### Zeke
+```
+echo 'hwaddress ether fa:61:fb:1a:8d:5b' >> /etc/network/interfaces
+```
+
+## Testing
+
+![ERWINFORBIDEN](https://github.com/user-attachments/assets/7b8b2618-f6c1-4e60-98c8-7d04ed702b50)
+
+## Soal 13
