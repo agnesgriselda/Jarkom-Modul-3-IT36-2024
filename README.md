@@ -36,22 +36,22 @@ iface eth0 inet dhcp
 auto eth1
 iface eth1 inet static
 	address 10.81.1.1
-	netmask 255.255.255.1
+	netmask 255.255.255.0
 
 auto eth2
 iface eth2 inet static
 	address 10.81.2.1
-	netmask 255.255.255.1
+	netmask 255.255.255.0
 
 auto eth3
 iface eth3 inet static
 	address 10.81.3.1
-	netmask 255.255.255.1
+	netmask 255.255.255.0
 
 auto eth4
 iface eth4 inet static
 	address 10.81.4.1
-	netmask 255.255.255.1
+	netmask 255.255.255.0
 ```
 
 ### Fritz (DNS Server)
@@ -59,7 +59,7 @@ iface eth4 inet static
 auto eth0
 iface eth0 inet static
 	address 10.81.4.2
-	netmask 255.255.255.1
+	netmask 255.255.255.0
 	gateway 10.81.4.1
 ```
 
@@ -68,7 +68,7 @@ iface eth0 inet static
 auto eth0
 iface eth0 inet static
 	address 10.81.4.3
-	netmask 255.255.255.1
+	netmask 255.255.255.0
 	gateway 10.81.4.1
 ```
 
@@ -77,7 +77,7 @@ iface eth0 inet static
 auto eth0
 iface eth0 inet static
 	address 10.81.3.4
-	netmask 255.255.255.1
+	netmask 255.255.255.0
 	gateway 10.81.3.1
 ```
 
@@ -86,7 +86,7 @@ iface eth0 inet static
 auto eth0
 iface eth0 inet static
 	address 10.81.3.2
-	netmask 255.255.255.1
+	netmask 255.255.255.0
 	gateway 10.81.3.1
 ```
 
@@ -95,7 +95,7 @@ iface eth0 inet static
 auto eth0
 iface eth0 inet static
 	address 10.81.3.3
-	netmask 255.255.255.1
+	netmask 255.255.255.0
 	gateway 10.81.3.1
 ```
 
@@ -104,7 +104,7 @@ iface eth0 inet static
 auto eth0
 iface eth0 inet static
 	address 10.81.1.2
-	netmask 255.255.255.1
+	netmask 255.255.255.0
 	gateway 10.81.1.1
 ```
 
@@ -113,7 +113,7 @@ iface eth0 inet static
 auto eth0
 iface eth0 inet static
 	address 10.81.1.3
-	netmask 255.255.255.1
+	netmask 255.255.255.0
 	gateway 10.81.1.1
 ```
 
@@ -122,7 +122,7 @@ iface eth0 inet static
 auto eth0
 iface eth0 inet static
 	address 10.81.1.4
-	netmask 255.255.255.1
+	netmask 255.255.255.0
 	gateway 10.81.1.1
 ```
 
@@ -131,7 +131,7 @@ iface eth0 inet static
 auto eth0
 iface eth0 inet static
 	address 10.81.2.2
-	netmask 255.255.255.1
+	netmask 255.255.255.0
 	gateway 10.81.2.1
 ```
 
@@ -140,7 +140,7 @@ iface eth0 inet static
 auto eth0
 iface eth0 inet static
 	address 10.81.2.3
-	netmask 255.255.255.1
+	netmask 255.255.255.0
 	gateway 10.81.2.1
 ```
 
@@ -149,7 +149,7 @@ iface eth0 inet static
 auto eth0
 iface eth0 inet static
 	address 10.81.2.4
-	netmask 255.255.255.1
+	netmask 255.255.255.0
 	gateway 10.81.2.1
 ```
 
