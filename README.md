@@ -278,7 +278,7 @@ service isc-dhcp-server restart
 ## Soal 6
 
 ### Armin, Eren, Mikasa
-```
+```sh
 mkdir -p /var/www/eldia.it36.com
 
 wget --no-check-certificate 'https://drive.google.com/uc?export=download&id=1TvebIeMQjRjFURKVtA32lO9aL7U2msd6' -O /root/bangsaEldia.zip
@@ -330,7 +330,7 @@ nginx -t
 ## Soal 7
 
 ### Colosal
-```
+```sh
 echo '
  upstream myweb  {
         server 10.81.2.2; #IP Armin
@@ -355,7 +355,7 @@ nginx -t
 ```
 
 ### Fritz
-```
+```sh
 echo ';
 ; BIND data file for local loopback interface
 ;
@@ -380,7 +380,7 @@ service bind9 restart
 ## Soal 8
 
 ## Colosal
-```
+```sh
 echo '
  upstream myweb  {
 #    hash $request_uri consistent;
@@ -418,6 +418,11 @@ nginx -t
 
 ![ROUNDROBIN](https://github.com/user-attachments/assets/f55c6036-a097-4d6f-933c-9a3190df23c3)
 
+### Grafik
+
+![Screenshot 2024-10-28 064808](https://github.com/user-attachments/assets/6f163c21-1866-486d-8ebb-ed20b6eaf1e5)
+
+
 ## Soal 9
 
 ## Testing
@@ -428,10 +433,19 @@ nginx -t
 
 ![3Worker](https://github.com/user-attachments/assets/c3b1fcc0-af1b-4eba-89fe-95e6dfa238f4)
 
+## Grafik
+
+![Screenshot 2024-10-28 070216](https://github.com/user-attachments/assets/974170a8-d2dc-4372-bf88-ad22f926281a)
+
+![Screenshot 2024-10-28 070234](https://github.com/user-attachments/assets/3eec9c31-4fe0-43ee-b855-e37b3d92003a)
+
+![Screenshot 2024-10-28 070250](https://github.com/user-attachments/assets/261ca846-6651-43ef-b69e-c136a3920b35)
+
+
 ## Soal 10
 
 ### Colosal
-```
+```sh
 mkdir /etc/nginx/supersecret
 htpasswd -b -c /etc/nginx/supersecret/htpasswd arminannie jrkmit36
 
@@ -476,7 +490,7 @@ nginx -t
 ## Soal 11
 
 ### Colosal
-```
+```sh
 echo '
  upstream myweb  {
         least_conn;
@@ -516,7 +530,7 @@ nginx -t
 ## Soal 12
 
 ### Colosal
-```
+```sh
 echo '
  upstream myweb  {
         least_conn;
@@ -558,7 +572,7 @@ nginx -t
 ```
 
 ### Tybur
-```
+```sh
 echo 'host Zeke{
         hardware ethernet fa:61:fb:1a:8d:5b;
         fixed-address 10.81.1.77;
@@ -569,7 +583,7 @@ service isc-dhcp-server restart
 ```
 
 ### Zeke
-```
+```sh
 echo 'hwaddress ether fa:61:fb:1a:8d:5b' >> /etc/network/interfaces
 ```
 
