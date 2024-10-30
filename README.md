@@ -641,7 +641,7 @@ EOF
 
 echo '[mysqld]
 skip-networking=0
-skip-bind-addres' > /etc/mysql/my.cnf
+skip-bind-address' > /etc/mysql/my.cnf
 ```
 
 Kita tes di salah satu worker
@@ -649,4 +649,6 @@ Kita tes di salah satu worker
 `mysql --host=10.81.3.4 --port=3306 --user=kelompokit36 --password`
 
 ### Hasil
+
+![Screenshot (3849)](https://github.com/user-attachments/assets/1d9ddc11-5d6c-412f-ac72-b716b3609539)
 
