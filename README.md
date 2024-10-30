@@ -544,6 +544,10 @@ echo '
         location /titan/ {
         proxy_pass https://attackontitan.fandom.com/wiki/Attack_on_Titan_Wiki;
         }
+
+        location /extrahehe {
+	 proxy_pass https://zenless-zone-zero.fandom.com/wiki/Von_Lycaon;
+	}
  }' > /etc/nginx/sites-available/lb-php
 
 ln -s /etc/nginx/sites-available/lb-php /etc/nginx/sites-enabled
