@@ -275,6 +275,16 @@ service isc-dhcp-server restart
 
 ![ping_marley(4)](https://github.com/user-attachments/assets/a8d10d7f-2ef3-40fb-96da-f4404273cf7d)
 
+## Testing No 5
+
+### Lease Time Erwin
+
+![lease_erwin(5)](https://github.com/user-attachments/assets/0b830282-8ce5-43e6-a209-f7b4e1fdd318)
+
+### Lease Time Zeke
+
+![lease_zeke(5)](https://github.com/user-attachments/assets/8db6ebc7-5ca3-40ef-81f1-8054a8b09d8c)
+
 ## Soal 6
 
 ### Armin, Eren, Mikasa
@@ -408,13 +418,21 @@ nginx -t
 
 #use ab -n 'sesuai soal' -c 'sesuai soal' http://eldia.it36.com/ to test the load balancing
 ```
-### Testing
+## Testing
+
+### HASH
 
 ![HASH](https://github.com/user-attachments/assets/6ce38859-db3e-4aa8-95ef-40e40cb614f9)
 
+### IPHASH
+
 ![IPHASH](https://github.com/user-attachments/assets/87509a0d-6402-4144-8056-df94d7eddc7f)
 
+### LEAST
+
 ![LEAST](https://github.com/user-attachments/assets/77b0faa0-513e-4730-93ec-1a2a5c82929a)
+
+### ROUND ROBIN
 
 ![ROUNDROBIN](https://github.com/user-attachments/assets/f55c6036-a097-4d6f-933c-9a3190df23c3)
 
@@ -427,9 +445,15 @@ nginx -t
 
 ## Testing
 
+### 1 WORKER
+
 ![1Worker](https://github.com/user-attachments/assets/f55bb82d-2745-4655-a59c-28df14e8ac34)
 
+### 2 WORKER
+
 ![2Worker](https://github.com/user-attachments/assets/8e1e228e-a1f0-4441-9053-150e6df16b63)
+
+### 3 WORKER
 
 ![3Worker](https://github.com/user-attachments/assets/c3b1fcc0-af1b-4eba-89fe-95e6dfa238f4)
 
@@ -479,13 +503,21 @@ nginx -t
 
 ## Testing
 
-![FAIL](https://github.com/user-attachments/assets/8528ec1d-6f9c-4fe7-8be5-7db68e8825f2)
-
-![PASS](https://github.com/user-attachments/assets/0ec7e040-ebb6-4be1-9cb7-976dca945b37)
+Memasukan Username
 
 ![USERNAME](https://github.com/user-attachments/assets/a99103ba-6727-438c-9e67-281b88bce2e1)
 
+Memasukan Password
+
+![PASS](https://github.com/user-attachments/assets/0ec7e040-ebb6-4be1-9cb7-976dca945b37)
+
+Saat Login Success
+
 ![CORRECT](https://github.com/user-attachments/assets/787885e5-f941-4dd0-8b69-02ad202e8d64)
+
+Saat Login Fail
+
+![FAIL](https://github.com/user-attachments/assets/8528ec1d-6f9c-4fe7-8be5-7db68e8825f2)
 
 ## Soal 11
 
@@ -592,3 +624,25 @@ echo 'hwaddress ether fa:61:fb:1a:8d:5b' >> /etc/network/interfaces
 ![ERWINFORBIDEN](https://github.com/user-attachments/assets/7b8b2618-f6c1-4e60-98c8-7d04ed702b50)
 
 ## Soal 13
+
+```sh
+mysql -u root <<EOF
+CREATE USER 'kelompokit36'@'%' IDENTIFIED BY 'passwordit36';
+CREATE USER 'kelompokit36'@'localhost' IDENTIFIED BY 'passwordit36';
+CREATE DATABASE dbkelompokit36;
+GRANT ALL PRIVILEGES ON *.* TO 'kelompokit36'@'%';
+GRANT ALL PRIVILEGES ON *.* TO 'kelompokit36'@'localhost';
+FLUSH PRIVILEGES;
+EOF
+
+echo '[mysqld]
+skip-networking=0
+skip-bind-addres' > /etc/mysql/my.cnf
+```
+
+Kita tes di salah satu worker
+
+`mysql --host=10.81.3.4 --port=3306 --user=kelompokit36 --password`
+
+### Hasil
+
